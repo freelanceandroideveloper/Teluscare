@@ -1,6 +1,6 @@
 package com.teluscare.android.network;
 
-import com.teluscare.android.model.BaseResponseBean;
+import com.teluscare.android.model.LoginResponseBean;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,8 +19,8 @@ public class NetworkServicesImpl {
         networkServices=RestClient.getClient().create(NetworkServices.class);
     }
 
-    public Observable<BaseResponseBean> login(String strUsername, String strPassword) {
-        return networkServices.login(strUsername,strPassword)
+    public Observable<LoginResponseBean> login(String strUsername, String strPassword, String userType) {
+        return networkServices.login(strUsername,strPassword,userType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

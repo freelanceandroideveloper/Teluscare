@@ -1,6 +1,7 @@
 package com.teluscare.android.network;
 
 import com.teluscare.android.model.BaseResponseBean;
+import com.teluscare.android.model.LoginResponseBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -24,8 +25,9 @@ public interface NetworkServices {
             HEADER_AUTH_KEY_VALUE
     })
     @POST("/demo/API/users/login")
-    Observable<BaseResponseBean> login(
+    Observable<LoginResponseBean> login(
             @Field("login_username") String username,
-            @Field("login_password") String password
+            @Field("login_password") String password,
+            @Field("login_usertype") String userType
     );
 }
