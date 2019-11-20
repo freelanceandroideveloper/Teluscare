@@ -8,18 +8,18 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * Created by SandeepY on 19112019
  **/
 
-@JsonDeserialize(using = LoginDeserializer.class)
+//@JsonDeserialize(using = LoginDeserializer.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginResponseBean extends BaseResponseBean{
 
     @JsonProperty("data")
-    private LoginResponseDataBean loginResponseDataBean;
+    private LoginResponseDataBean Data;
 
-    public LoginResponseDataBean getLoginResponseDataBean() {
-        return loginResponseDataBean;
+    public LoginResponseDataBean getData() {
+        return Data;
     }
 
-    public void setLoginResponseDataBean(LoginResponseDataBean loginResponseDataBean) {
-        this.loginResponseDataBean = loginResponseDataBean;
+    public void setData(LoginResponseDataBean data) {
+        Data = data;
     }
 }
