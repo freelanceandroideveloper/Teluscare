@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Teluscare</string>
+    <string name="signup_text">SIGNUP</string>
+    <string name="enter_email_id">Enter Email id</string>
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="enter_password">Password</string>
+    <string name="enter_cnf_password">Confirm Password</string>
+    <string name="enter_ref_code">Refer Code (if Any)</string>
+    <string name="txt_register">Register</string>
+
 </resources>
