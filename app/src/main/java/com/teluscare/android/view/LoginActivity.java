@@ -56,6 +56,8 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
 
     private void setListener(){
         binding.btnLogin.setOnClickListener(this);
+        binding.rlIndividual.setOnClickListener(this);
+        binding.rlCompany.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +65,18 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         switch (v.getId()){
             case R.id.btnLogin:
                 processLogin();
+                break;
+
+            case R.id.rlIndividual:
+                binding.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
+                binding.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                break;
+
+            case R.id.rlCompany:
+                binding.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
                 break;
         }
     }

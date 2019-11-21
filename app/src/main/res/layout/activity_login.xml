@@ -1,43 +1,97 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/llMain"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical">
-                <EditText
-                    android:id="@+id/edtEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter email"
-                    android:layout_gravity="center_horizontal"/>
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-                <EditText
-                    android:id="@+id/edtPassword"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/llMainBg"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter password"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_40sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_marginRight="@dimen/_40sdp"
+                    android:background="@drawable/rounded_grey_bg"
+                    android:weightSum="2">
 
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlIndividual"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_blue_bg">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="Individual"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlCompany"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="Company"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter email" />
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="Enter password" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="Login" />
+        </LinearLayout>
 
 
-        </ScrollView>
+    </ScrollView>
 </layout>
