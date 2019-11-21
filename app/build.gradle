@@ -12,7 +12,7 @@ android {
 
         multiDexEnabled true
     }
-    signingConfigs {
+   /* signingConfigs {
         debug {
             storeFile file('D:/JKS/teluscareapp.jks')
             storePassword 'teluscareapp@123'
@@ -25,7 +25,7 @@ android {
             keyPassword 'teluscareapp@123'
             keyAlias 'key0'
         }
-    }
+    }*/
 
     buildTypes {
         debug {
@@ -44,7 +44,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'ENV', '"RELEASE"'
             manifestPlaceholders = [appName: "Teluscare"]
-            signingConfig signingConfigs.release
+           // signingConfig signingConfigs.release
         }
     }
 
