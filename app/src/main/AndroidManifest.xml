@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teluscare.android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".utility.TeluscareApp"
         android:allowBackup="true"
@@ -11,6 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".view.BaseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.LoginActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
