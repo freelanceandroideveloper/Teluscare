@@ -51,7 +51,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     private void initView(){
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_blue));
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         viewModel = new TeluscareViewModel();
@@ -66,6 +66,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         binding.customToggleLogin.rlIndividual.setOnClickListener(this);
         binding.customToggleLogin.rlCompany.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
+        binding.tvRegisterNow.setOnClickListener(this);
     }
 
     @Override
@@ -95,11 +96,16 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 Intent intentForgotPassword = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
                 startActivity(intentForgotPassword);
                 break;
+
+            case R.id.tvRegisterNow:
+                Intent intentRegisterNow = new Intent(LoginActivity.this,RegistrationActivity.class);
+                startActivity(intentRegisterNow);
+                break;
         }
     }
 
     private void processLogin(){
-        String strEmail = binding.edtEmail.getText().toString();
+        String strEmail = binding.edtUsername.getText().toString();
         String strPassword = binding.edtPassword.getText().toString();
 
         if(TextUtils.isEmpty(strEmail)){

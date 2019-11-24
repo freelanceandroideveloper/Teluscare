@@ -44,7 +44,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
     private void initView(){
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_blue));
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
         viewModel = new TeluscareViewModel();
