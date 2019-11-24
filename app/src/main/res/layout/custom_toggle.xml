@@ -1,0 +1,57 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:id="@+id/llMainBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:background="@drawable/rounded_grey_bg"
+            android:weightSum="2">
+
+            <RelativeLayout
+                android:id="@+id/rlIndividual"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_blue_bg">
+
+                <TextView
+                    android:id="@+id/tvIndividual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="    Individual    "
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlCompany"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_grey_bg">
+
+                <TextView
+                    android:id="@+id/tvCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="   Company   "
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_14ssp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
