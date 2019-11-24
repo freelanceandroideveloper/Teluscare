@@ -8,5 +8,13 @@
     <string name="enter_ref_code">Refer Code (if Any)</string>
     <string name="txt_register">Register</string>
     <string name="text_send_otp">Send OTP</string>
-
+    <string name="text_enter_otp">Please enter otp</string>
+    <string name="text_otp_size">enter valid otp</string>
+    <string name="text_receive_otp">Don\'t Receive an OTP?</string>
+    <string name="text_resend">Resend OTP</string>
+    <string name="text_veify">Verify OTP</string>
+    <string name="text_select_job">Select Job Role</string>
+    <string name="text_select_company">Select Company Type</string>
+    <string name="text_signup">Don\'t have an account?</string>
+    <string name="text_registernow">Register Now</string>
 </resources>

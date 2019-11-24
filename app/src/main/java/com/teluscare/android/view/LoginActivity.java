@@ -1,6 +1,7 @@
 package com.teluscare.android.view;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         binding.btnLogin.setOnClickListener(this);
         binding.rlIndividual.setOnClickListener(this);
         binding.rlCompany.setOnClickListener(this);
+        binding.textrgst.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +80,9 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 binding.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
                 binding.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
                 break;
+            case R.id.textrgst:
+                Intent intent = new Intent(this,SignupActivity.class);
+                startActivity(intent);
         }
     }
 

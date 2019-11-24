@@ -17,7 +17,8 @@
         android:id="@+id/toolbar"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,7 +50,7 @@
             app:errorEnabled="false">
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edt_mobno"
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_email_black_24dp"
@@ -136,7 +137,12 @@
             android:layout_margin="@dimen/_10sdp"
             app:errorEnabled="false">
 
+            <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+            </AutoCompleteTextView>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -224,17 +230,20 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/blue_button_poppins_semibold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
         android:background="@drawable/mob_btn_bg"
         android:text="@string/txt_register"
         android:textColor="@android:color/white"
         android:textAllCaps="false"
+        android:id="@+id/register"
         android:textSize="@dimen/_15ssp"/>
 
 

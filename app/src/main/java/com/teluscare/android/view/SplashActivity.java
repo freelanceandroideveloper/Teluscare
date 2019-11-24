@@ -24,8 +24,6 @@ public class SplashActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         initview();
 
-
-
     }
 
     private void initview() {
