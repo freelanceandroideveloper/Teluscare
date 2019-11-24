@@ -3,11 +3,16 @@ package com.teluscare.android.view;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -46,48 +51,61 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     private void initView(){
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_blue));
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         viewModel = new TeluscareViewModel();
         TeluscareSharedPreference teluscareSharedPreference = new TeluscareSharedPreference();
         sharedPreferences = teluscareSharedPreference.getTeluscareSharedPreference();
+        binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
         compositeDisposable = new CompositeDisposable();
     }
 
     private void setListener(){
-        binding.btnLogin.setOnClickListener(this);
-        binding.rlIndividual.setOnClickListener(this);
-        binding.rlCompany.setOnClickListener(this);
-        binding.textrgst.setOnClickListener(this);
+        binding.rlLogin.setOnClickListener(this);
+        binding.customToggleLogin.rlIndividual.setOnClickListener(this);
+        binding.customToggleLogin.rlCompany.setOnClickListener(this);
+        binding.tvForgotPassword.setOnClickListener(this);
+        binding.tvRegisterNow.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnLogin:
+            case R.id.rlLogin:
                 processLogin();
                 break;
 
             case R.id.rlIndividual:
-                binding.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
-                binding.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
+                binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
 
             case R.id.rlCompany:
-                binding.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#D0D1D2"));
+                binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
-            case R.id.textrgst:
-                Intent intent = new Intent(this,SignupActivity.class);
-                startActivity(intent);
+
+            case R.id.tvForgotPassword:
+                Intent intentForgotPassword = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intentForgotPassword);
+                break;
+
+            case R.id.tvRegisterNow:
+                Intent intentRegisterNow = new Intent(LoginActivity.this,SignupActivity.class);
+                startActivity(intentRegisterNow);
+                break;
         }
     }
 
     private void processLogin(){
-        String strEmail = binding.edtEmail.getText().toString();
+        String strEmail = binding.edtUsername.getText().toString();
         String strPassword = binding.edtPassword.getText().toString();
 
         if(TextUtils.isEmpty(strEmail)){
