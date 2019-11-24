@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "312340076368",
+    "firebase_url": "https://teluscare-f4d9f.firebaseio.com",
+    "project_id": "teluscare-f4d9f",
+    "storage_bucket": "teluscare-f4d9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312340076368:android:c04e7b8612552e3baabe55",
+        "android_client_info": {
+          "package_name": "com.teluscare.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312340076368-950c2l1rdg5ugk5utiobt07svmqbauh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAkN9zSSVcAIHuLiAKeIoubS5yzMawYPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312340076368-950c2l1rdg5ugk5utiobt07svmqbauh6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
