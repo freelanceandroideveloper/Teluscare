@@ -1,6 +1,7 @@
 package com.teluscare.android.viewmodel;
 
 import com.teluscare.android.model.BaseResponseBean;
+import com.teluscare.android.model.ForgotPasswordResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
 import com.teluscare.android.network.NetworkServicesImpl;
 
@@ -36,6 +37,28 @@ public class TeluscareViewModel {
                             return;
                         }
                         response.accept(loginResponseBean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        error.accept(throwable);
+                    }
+                });
+        return disposable;
+    }
+
+    public Disposable forgotPassword(String strEmail, final Consumer<ForgotPasswordResponseBean> response, final Consumer<Throwable> error) {
+        disposable = services.forgotPassword(strEmail)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<ForgotPasswordResponseBean>() {
+                    @Override
+                    public void accept(ForgotPasswordResponseBean forgotPasswordResponseBean) throws Exception {
+                        if(!forgotPasswordResponseBean.getStatus().equalsIgnoreCase("true")){
+                            error.accept(new Throwable(forgotPasswordResponseBean.getError()));
+                            return;
+                        }
+                        response.accept(forgotPasswordResponseBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

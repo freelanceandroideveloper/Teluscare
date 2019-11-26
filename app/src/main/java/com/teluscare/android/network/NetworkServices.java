@@ -1,6 +1,7 @@
 package com.teluscare.android.network;
 
 import com.teluscare.android.model.BaseResponseBean;
+import com.teluscare.android.model.ForgotPasswordResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
 
 import io.reactivex.Observable;
@@ -29,5 +30,16 @@ public interface NetworkServices {
             @Field("login_username") String username,
             @Field("login_password") String password,
             @Field("login_usertype") String userType
+    );
+
+
+    @FormUrlEncoded
+    @Headers({
+            HEADER_X_API_KEY_VALUE,
+            HEADER_AUTH_KEY_VALUE
+    })
+    @POST("/demo/API/users/forgotten_password")
+    Observable<ForgotPasswordResponseBean> forgotPassword(
+            @Field("email") String email
     );
 }
