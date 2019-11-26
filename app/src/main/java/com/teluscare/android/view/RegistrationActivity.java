@@ -24,6 +24,7 @@ import com.teluscare.android.model.CompanyListResponseBean;
 import com.teluscare.android.model.CompanyListResponseDataBean;
 import com.teluscare.android.model.IndividualListResponseBean;
 import com.teluscare.android.model.IndividualListResponseDataBean;
+import com.teluscare.android.model.Userregistraionmodel;
 import com.teluscare.android.utility.TeluscareSharedPreference;
 import com.teluscare.android.viewmodel.TeluscareViewModel;
 
@@ -62,14 +63,14 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
                 if(individual){
                     for(int i = 0; i <individuallist.size();i++){
                         if(individuallist.get(i).getUsername().equalsIgnoreCase(selection)){
-                            keyid = individuallist.get(i).getUser_id();
+                            keyid = individuallist.get(i).getJobid();
 
                         }
                     }
                 }else {
                     for(int i = 0; i <companylist.size();i++){
                         if(companylist.get(i).getUsername().equalsIgnoreCase(selection)){
-                            keyid = companylist.get(i).getUser_id();
+                            keyid = companylist.get(i).getJobid();
 
                         }
                     }
@@ -101,6 +102,9 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
         progressBar.setTitle("Teluscare");
         progressBar.setCancelable(false);
         progressBar.show();
+        Intent i = getIntent();
+        binding.edtEmail.setText(i.getStringExtra("email"));
+        binding.edtEmail.setEnabled(false);
         getcompanydata();
         getindividualdata();
 
@@ -126,7 +130,6 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
             @Override
             public void accept(CompanyListResponseBean responseBean) throws Exception {
                  companylist = responseBean.getData();
-
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -193,15 +196,15 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
 
 
     private void processRegistration() {
-    if(TextUtils.isEmpty(binding.edtEmail.getText())){
-        binding.edtEmail.setError("Please enter emailid");
-        binding.edtEmail.requestFocus();
-        }else  if(TextUtils.isEmpty(keyid)){
+      if(TextUtils.isEmpty(keyid)){
         binding.autoCompleteTextView.setError("Please select value");
         binding.autoCompleteTextView.requestFocus();
     }else  if(TextUtils.isEmpty(binding.edtFullname.getText())){
-        binding.edtFullname.setError("Please Enter full Name");
+        binding.edtFullname.setError("Please Enter first Name");
         binding.edtFullname.requestFocus();
+    }else  if(TextUtils.isEmpty(binding.edtFullname.getText())){
+        binding.edtLastname.setError("Please Enter last Name");
+        binding.edtLastname.requestFocus();
     }else  if(TextUtils.isEmpty(binding.edtPassword.getText())){
         binding.edtPassword.setError("Please Enter password");
         binding.edtPassword.requestFocus();
@@ -211,7 +214,9 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
     }else  if(!binding.edtPassword.getText().toString().equalsIgnoreCase(binding.edtCnfpasswd.getText().toString())){
         binding.edtCnfpasswd.setError("These password dont match");
         binding.edtCnfpasswd.requestFocus();
-    }else{
+    }else  if(!binding.checkbox.isChecked()){
+          Toast.makeText(this, "Please select terms and conditions", Toast.LENGTH_SHORT).show();
+      }else{
         callregisterapi();
     }
 
@@ -219,10 +224,38 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
     }
 
     private void callregisterapi() {
+        progressBar.show();
+        String email= binding.edtEmail.getText().toString();
+       String job= binding.autoCompleteTextView.getText().toString();
+       String firstname = binding.edtFullname.getText().toString();
+        String lastname = binding.edtLastname.getText().toString();
+       String password = binding.edtPassword.getText().toString();
+       String cnfpassword =binding.edtCnfpasswd.getText().toString();
+       String refercode =binding.edtRefcode.getText().toString();
+       if(TextUtils.isEmpty(refercode)){
+           refercode = "";
+       }
+        compositeDisposable.add(viewModel.userregistration(email,job,firstname,
+                lastname,password,cnfpassword,refercode,
+                "1","1",new Consumer<Userregistraionmodel>() {
+            @Override
+            public void accept(Userregistraionmodel responseBean) throws Exception {
+                progressBar.dismiss();
+                if(responseBean.getData().equalsIgnoreCase("User Registered")){
+                    Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    //Toast.makeText(this,responseBean.getData().t,Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                progressBar.dismiss();
+            }
+        }));
 
-        Intent intent= new Intent(RegistrationActivity.this,LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override

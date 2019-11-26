@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.RegistrationActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/toolbar_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/toolbar"/>
 
-    <include layout="@layout/toolbar_new"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             app:layout_constraintTop_toTopOf="parent"
+            android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbar"/>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,9 +57,8 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_email_black_24dp"
                 android:fontFamily="@font/poppins_light"
-                android:inputType="number"
-                android:hint="@string/enter_email_id"
-                android:maxLength="10" />
+                android:inputType="textEmailAddress"
+                android:hint="@string/enter_email_id"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -161,13 +162,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:inputType="number"
+                android:inputType="text"
                 android:hint="@string/enter_full_name"
-                android:maxLength="10" />
+                 />
         </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtinput_password"
+            android:id="@+id/txtinput_lastnamew"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -178,13 +178,34 @@
             app:errorEnabled="false">
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_lastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:inputType="text"
+                android:hint="@string/enter_last_name"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtinput_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtinput_lastnamew"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            app:errorEnabled="false">
+
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:hint="@string/enter_password"
-                android:maxLength="10" />
+                android:maxLength="8" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -203,9 +224,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:hint="@string/enter_cnf_password"
-                android:maxLength="10" />
+                android:maxLength="8" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtinput_refcode"
@@ -224,12 +245,21 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:inputType="text"
-                android:hint="@string/enter_ref_code"
-                android:maxLength="10" />
+                android:hint="@string/enter_ref_code"/>
         </com.google.android.material.textfield.TextInputLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:text="@string/text_read_terms"
+                android:id="@+id/checkbox"
+                app:layout_constraintTop_toBottomOf="@id/txtinput_refcode"
+                android:layout_margin="@dimen/_10sdp"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     <androidx.appcompat.widget.AppCompatButton
         style="@style/blue_button_poppins_semibold"
         android:layout_width="match_parent"
@@ -246,7 +276,6 @@
         android:id="@+id/register"
         android:textSize="@dimen/_15ssp"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

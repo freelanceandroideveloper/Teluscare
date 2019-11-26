@@ -2,7 +2,8 @@
     <string name="app_name">Teluscare</string>
     <string name="signup_text">SIGNUP</string>
     <string name="enter_email_id">Enter Email id</string>
-    <string name="enter_full_name">Enter Full Name</string>
+    <string name="enter_full_name">Enter First Name</string>
+    <string name="enter_last_name">Enter Last Name</string>
     <string name="enter_password">Password</string>
     <string name="enter_cnf_password">Confirm Password</string>
     <string name="enter_username">User Name</string>
@@ -18,4 +19,5 @@
     <string name="text_select_company">Select Company Type</string>
     <string name="text_signup">Don\'t have an account?</string>
     <string name="text_registernow">Register Now</string>
+    <string name="text_read_terms">I have read,understood &amp; agree to the <b>Terms &amp; Conditions</b> of TelusCare</string>
 </resources>

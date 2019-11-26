@@ -4,6 +4,7 @@ import com.teluscare.android.model.CompanyListResponseBean;
 import com.teluscare.android.model.IndividualListResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
 import com.teluscare.android.model.SendOtpResponse;
+import com.teluscare.android.model.Userregistraionmodel;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,4 +47,21 @@ public class NetworkServicesImpl {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+
+    public Observable<Userregistraionmodel> userregistration(String username,
+                                                             String jobtype,
+                                                             String firstname,
+                                                             String lastname,
+                                                             String password,
+                                                             String cnfpassword,
+                                                             String refercode,
+                                                             String customertype,
+                                                             String usertype) {
+        return networkServices.userregistration(username,jobtype,firstname,
+                lastname,password,cnfpassword,refercode,customertype,usertype)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }

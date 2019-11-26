@@ -4,6 +4,7 @@ import com.teluscare.android.model.CompanyListResponseBean;
 import com.teluscare.android.model.IndividualListResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
 import com.teluscare.android.model.SendOtpResponse;
+import com.teluscare.android.model.Userregistraionmodel;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -64,5 +65,24 @@ public interface NetworkServices {
     @POST("/demo/API/utility/get_job_roles")
     Observable<CompanyListResponseBean> customer_typeindividual(
             @Field("customer_type") String customer_type
+    );
+
+
+    @FormUrlEncoded
+    @Headers({
+            HEADER_X_API_KEY_VALUE,
+            HEADER_AUTH_KEY_VALUE
+    })
+    @POST("/demo/API/users/register")
+    Observable<Userregistraionmodel> userregistration(
+            @Field("user_name") String user_name,
+            @Field("job_type")  String job_type,
+            @Field("first_name")  String first_name,
+            @Field("last_name")  String last_name,
+            @Field("password")  String password,
+            @Field("confirm_password")  String confirm_password,
+            @Field("customer_refer_code")  String customer_refer_code,
+            @Field("customer_type")  String customer_type,
+            @Field("usertype")  String usertype
     );
 }
