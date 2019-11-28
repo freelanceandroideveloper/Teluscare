@@ -1,7 +1,10 @@
 package com.teluscare.android.network;
 
+import com.teluscare.android.model.CompanyListResponseBean;
+import com.teluscare.android.model.IndividualListResponseBean;
 import com.teluscare.android.model.ForgotPasswordResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
+import com.teluscare.android.model.SendOtpResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,6 +31,25 @@ public class NetworkServicesImpl {
 
     public Observable<ForgotPasswordResponseBean> forgotPassword(String strEmail) {
         return networkServices.forgotPassword(strEmail)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<SendOtpResponse> Sendotp(String strUsername) {
+        return networkServices.Sendotp(strUsername)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public Observable<IndividualListResponseBean> getlistindividual(String customertype) {
+        return networkServices.customer_typecompany(customertype)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<CompanyListResponseBean> getlistcompany(String customertype) {
+        return networkServices.customer_typeindividual(customertype)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

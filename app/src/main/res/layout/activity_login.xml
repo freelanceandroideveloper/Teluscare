@@ -1,6 +1,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,23 +33,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="LOGIN TO YOUR TELUSCARE ACCOUNT"
+                android:text="@string/login_header"
                 android:textColor="#333333"
-                android:textSize="@dimen/_16ssp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_7sdp"
+                android:layout_marginRight="@dimen/_7sdp"/>
 
             <include
                 android:id="@+id/customToggleLogin"
                 layout="@layout/custom_toggle" />
 
-
-            <!--<EditText
-                android:id="@+id/edtEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:hint="Enter email" />-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilUsername"
@@ -64,9 +59,9 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_username"
                     android:fontFamily="@font/poppins_light"
-                    android:inputType="textVisiblePassword|textNoSuggestions"
+                    android:inputType="textVisiblePassword|textNoSuggestions|textEmailAddress"
                     android:hint="@string/enter_username"
-                    android:maxLength="10" />
+                    android:maxLength="50" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -103,7 +98,7 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:padding="@dimen/_5sdp"
-                android:text="Forgot your password?"
+                android:text="@string/text_forgot_password"
                 android:textColor="@color/orange_text"
                 android:textSize="@dimen/_12ssp" />
 
@@ -141,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="Don't have an account? "
+                    android:text="@string/text_dont_have_acc"
                     android:textColor="#333333"
                     android:textSize="@dimen/_12ssp" />
 

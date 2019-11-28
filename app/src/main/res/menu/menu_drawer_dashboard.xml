@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/group_item_one"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/itemAboutUsDashboard"
+            android:icon="@drawable/ic_aboutus"
+            android:title="User Profile" />
+
+        <item
+            android:id="@+id/itemOM"
+            android:icon="@drawable/ic_order_management"
+            android:title="Oder Management" />
+
+
+        <item
+            android:id="@+id/itemServMgnt"
+            android:icon="@drawable/ic_serv_mgnt"
+            android:title="Services &amp;\nSchedule Management" />
+
+        <item
+            android:id="@+id/itemWallet"
+            android:icon="@drawable/ic_wallet"
+            android:title="Wallet" />
+
+        <item
+            android:id="@+id/itemRefer"
+            android:icon="@drawable/ic_refer"
+            android:title="Refer &amp; Earn" />
+    </group>
+    <group
+        android:id="@+id/group_item_two"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/itemSupportDashboard"
+            android:icon="@drawable/ic_support"
+            android:title="support@teluscare.com" />
+
+        <item
+            android:id="@+id/itemLogoutDashboard"
+            android:title="Logout" />
+
+    </group>
+</menu>

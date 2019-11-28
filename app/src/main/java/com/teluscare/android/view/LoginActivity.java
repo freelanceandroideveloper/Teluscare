@@ -1,6 +1,7 @@
 package com.teluscare.android.view;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,6 +30,10 @@ import com.teluscare.android.viewmodel.TeluscareViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
+import static com.teluscare.android.utility.CommonUtil.FROM_HOME;
+import static com.teluscare.android.utility.CommonUtil.IS_LOGGED_IN;
+import static com.teluscare.android.utility.CommonUtil.USER_NAME;
+
 /**
  * Created by SandeepY on 19112019
  **/
@@ -40,6 +45,8 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     private TeluscareViewModel viewModel;
     private SharedPreferences sharedPreferences;
     private CompositeDisposable compositeDisposable;
+    private boolean fromHome;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +66,8 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         sharedPreferences = teluscareSharedPreference.getTeluscareSharedPreference();
         binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
         compositeDisposable = new CompositeDisposable();
+
+        fromHome = getIntent().getBooleanExtra(FROM_HOME,false);
     }
 
     private void setListener(){
@@ -98,7 +107,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 break;
 
             case R.id.tvRegisterNow:
-                Intent intentRegisterNow = new Intent(LoginActivity.this,RegistrationActivity.class);
+                Intent intentRegisterNow = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(intentRegisterNow);
                 break;
         }
@@ -109,23 +118,37 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         String strPassword = binding.edtPassword.getText().toString();
 
         if(TextUtils.isEmpty(strEmail)){
-            Toast.makeText(this, "Email is required!!", Toast.LENGTH_SHORT).show();
+            binding.edtUsername.setError(getResources().getString(R.string.email_required));
+            binding.edtUsername.requestFocus();
         }else if(TextUtils.isEmpty(strPassword)){
-            Toast.makeText(this, "Password is required!!", Toast.LENGTH_SHORT).show();
+            binding.edtPassword.setError(getResources().getString(R.string.password_required));
+            binding.edtPassword.requestFocus();
         }else{
             callLoginAPI(strEmail,strPassword);
         }
     }
 
     private void callLoginAPI(String email,String password){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(getResources().getString(R.string.text_logging_in));
+        progressDialog.setMessage(getResources().getString(R.string.text_please_wait));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
         compositeDisposable.add(viewModel.login(email, password, "1",new Consumer<LoginResponseBean>() {
             @Override
             public void accept(LoginResponseBean responseBean) throws Exception {
-                Toast.makeText(LoginActivity.this, responseBean.getStatus(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    finishAffinity();
+                    TeluscareSharedPreference.setStringValue(sharedPreferences,USER_NAME,responseBean.getData().getFirst_name());
+                    TeluscareSharedPreference.setBooleanValue(sharedPreferences,IS_LOGGED_IN,true);
+                    Intent intentDashboard = new Intent(LoginActivity.this,DashboardActivity.class);
+                    intentDashboard.putExtra(FROM_HOME,fromHome);
+                    startActivity(intentDashboard);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                progressDialog.dismiss();
                 Toast.makeText(LoginActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }));
@@ -143,5 +166,11 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         super.onDestroy();
         if(null!=compositeDisposable)
             compositeDisposable.dispose();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

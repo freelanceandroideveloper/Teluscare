@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/group_item_one"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/itemAboutUsHome"
+            android:icon="@drawable/ic_aboutus"
+            android:title="About Us" />
+
+        <item
+            android:id="@+id/itemDashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="Dashboard" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_item_two"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/itemCleaning"
+            android:icon="@drawable/ic_cleaning"
+            android:title="Cleaning Services" />
+
+        <item
+            android:id="@+id/itemPest"
+            android:icon="@drawable/ic_pestcontrol"
+            android:title="Pest Control" />
+    </group>
+
+    <group
+        android:id="@+id/group_item_three"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/itemSupportHome"
+            android:icon="@drawable/ic_support"
+            android:title="support@teluscare.com" />
+
+    </group>
+
+</menu>

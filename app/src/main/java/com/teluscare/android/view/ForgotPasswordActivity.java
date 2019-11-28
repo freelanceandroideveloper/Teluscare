@@ -1,5 +1,6 @@
 package com.teluscare.android.view;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -35,8 +36,8 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
 
     private ActivityForgotPasswordBinding binding;
     private TeluscareViewModel viewModel;
-    private SharedPreferences sharedPreferences;
     private CompositeDisposable compositeDisposable;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +53,6 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forgot_password);
         viewModel = new TeluscareViewModel();
-        TeluscareSharedPreference teluscareSharedPreference = new TeluscareSharedPreference();
-        sharedPreferences = teluscareSharedPreference.getTeluscareSharedPreference();
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -73,26 +72,46 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
     private void processRequest(){
         String strEmail = binding.edtForgotPassword.getText().toString();
         if(TextUtils.isEmpty(strEmail)){
-            Toast.makeText(this, "Enter Email!", Toast.LENGTH_SHORT).show();
+            binding.edtForgotPassword.setError(getResources().getString(R.string.email_required));
+            binding.edtForgotPassword.requestFocus();
         }else{
             callForgotPasswordAPI(strEmail);
         }
     }
 
     private void callForgotPasswordAPI(String email){
-        viewModel.forgotPassword(email, new Consumer<ForgotPasswordResponseBean>() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(getResources().getString(R.string.sending_email));
+        progressDialog.setMessage(getResources().getString(R.string.text_please_wait));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        compositeDisposable.add(viewModel.forgotPassword(email, new Consumer<ForgotPasswordResponseBean>() {
             @Override
             public void accept(ForgotPasswordResponseBean forgotPasswordResponseBean) throws Exception {
+                progressDialog.dismiss();
                 Toast.makeText(ForgotPasswordActivity.this, forgotPasswordResponseBean.getData(), Toast.LENGTH_SHORT).show();
                 finish();
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                progressDialog.dismiss();
                 Toast.makeText(ForgotPasswordActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(null!=compositeDisposable)
+            compositeDisposable.clear();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null!=compositeDisposable)
+            compositeDisposable.dispose();
+    }
 }
