@@ -121,6 +121,8 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
             @Override
             public void accept(Throwable throwable) throws Exception {
               progressBar.dismiss();
+                showerror(throwable.getMessage().toString());
+
             }
         }));
     }
@@ -135,6 +137,8 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
             @Override
             public void accept(Throwable throwable) throws Exception {
              progressBar.dismiss();
+                showerror(throwable.getMessage().toString());
+
             }
         }));
 
@@ -235,7 +239,7 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
        if(TextUtils.isEmpty(refercode)){
            refercode = "";
        }
-        compositeDisposable.add(viewModel.userregistration(email,job,firstname,
+        compositeDisposable.add(viewModel.userregistration(email,keyid,firstname,
                 lastname,password,cnfpassword,refercode,
                 "1","1",new Consumer<Userregistraionmodel>() {
             @Override
@@ -246,15 +250,21 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
                     startActivity(intent);
                     finish();
                 }else {
-                    //Toast.makeText(this,responseBean.getData().t,Toast.LENGTH_LONG).show();
+                    showerror(responseBean.getData());
                 }
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 progressBar.dismiss();
+                showerror(throwable.getMessage().toString());
             }
         }));
+
+    }
+
+    private void showerror(String data) {
+        Toast.makeText(this,data.toString(),Toast.LENGTH_LONG).show();
 
     }
 
