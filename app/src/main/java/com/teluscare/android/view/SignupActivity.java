@@ -72,6 +72,7 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
             if(binding.edtOtp.getText().toString().equalsIgnoreCase(otpfromserver)){
                 Toast.makeText(this,"OTP Verified",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this,RegistrationActivity.class);
+                intent.putExtra("email",binding.edtEmaiid.getText().toString());
                 startActivity(intent);
                 finish();
             }else{

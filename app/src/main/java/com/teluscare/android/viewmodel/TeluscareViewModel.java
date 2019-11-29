@@ -6,6 +6,7 @@ import com.teluscare.android.model.CompanyListResponseBean;
 import com.teluscare.android.model.IndividualListResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
 import com.teluscare.android.model.SendOtpResponse;
+import com.teluscare.android.model.Userregistraionmodel;
 import com.teluscare.android.network.NetworkServicesImpl;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -129,6 +130,38 @@ public class TeluscareViewModel {
                 .subscribe(new Consumer<IndividualListResponseBean>() {
                     @Override
                     public void accept(IndividualListResponseBean sendCompanydata) throws Exception {
+                        if(!sendCompanydata.getStatus().equalsIgnoreCase("true")){
+                            error.accept(new Throwable(String.valueOf(sendCompanydata.getError())));
+                            return;
+                        }
+                        response.accept(sendCompanydata);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        error.accept(throwable);
+                    }
+                });
+        return disposable;
+    }
+
+    public Disposable userregistration(String username,
+                                       String jobtype,
+                                       String firstname,
+                                       String lastname,
+                                       String password,
+                                       String cnfpassword,
+                                       String refercode,
+                                       String customertype,
+                                       String usertype, final Consumer<Userregistraionmodel> response,
+                                        final Consumer<Throwable> error) {
+        disposable = services.userregistration(username,jobtype,firstname,
+                lastname,password,cnfpassword,refercode,customertype,usertype)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<Userregistraionmodel>() {
+                    @Override
+                    public void accept(Userregistraionmodel sendCompanydata) throws Exception {
                         if(!sendCompanydata.getStatus().equalsIgnoreCase("true")){
                             error.accept(new Throwable(String.valueOf(sendCompanydata.getError())));
                             return;

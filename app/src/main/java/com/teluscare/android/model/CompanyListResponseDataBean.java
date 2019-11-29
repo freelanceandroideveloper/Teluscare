@@ -10,6 +10,17 @@ public class CompanyListResponseDataBean {
     @JsonProperty("job_type")
     private String username;
 
+    public String getJobid() {
+        return jobid;
+    }
+
+    public void setJobid(String jobid) {
+        this.jobid = jobid;
+    }
+
+    @JsonProperty("job_type_id")
+    private String jobid;
+
     public String getUser_id() {
         return User_id;
     }
