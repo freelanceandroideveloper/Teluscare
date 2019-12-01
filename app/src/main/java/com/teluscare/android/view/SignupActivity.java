@@ -104,7 +104,7 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
         compositeDisposable.add(viewModel.sendotp(otp,new Consumer<SendOtpResponse>() {
             @Override
             public void accept(SendOtpResponse responseBean) throws Exception {
-                Toast.makeText(SignupActivity.this, responseBean.getStatus(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SignupActivity.this, responseBean.getStatus(), Toast.LENGTH_SHORT).show();
                 passdata();
                  otpfromserver = responseBean.getOtp();
                  progressBar.dismiss();

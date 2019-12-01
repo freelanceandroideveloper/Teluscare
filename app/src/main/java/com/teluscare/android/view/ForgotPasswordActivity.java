@@ -21,6 +21,7 @@ import com.teluscare.android.R;
 import com.teluscare.android.databinding.ActivityForgotPasswordBinding;
 import com.teluscare.android.model.ForgotPasswordResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
+import com.teluscare.android.utility.CommonUtil;
 import com.teluscare.android.utility.TeluscareSharedPreference;
 import com.teluscare.android.viewmodel.TeluscareViewModel;
 
@@ -46,7 +47,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         setListener();
     }
 
-    private void initView(){
+    private void initView() {
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_blue));
@@ -56,30 +57,34 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         compositeDisposable = new CompositeDisposable();
     }
 
-    private void setListener(){
+    private void setListener() {
         binding.rlSubmit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rlSubmit:
                 processRequest();
                 break;
         }
     }
 
-    private void processRequest(){
+    private void processRequest() {
         String strEmail = binding.edtForgotPassword.getText().toString();
-        if(TextUtils.isEmpty(strEmail)){
+        if (TextUtils.isEmpty(strEmail)) {
             binding.edtForgotPassword.setError(getResources().getString(R.string.email_required));
             binding.edtForgotPassword.requestFocus();
-        }else{
-            callForgotPasswordAPI(strEmail);
+        } else if (CommonUtil.isValidEmail(strEmail)) {
+            binding.edtForgotPassword.setError(getResources().getString(R.string.invalid_email));
+            binding.edtForgotPassword.requestFocus();
+        } else {
+            if (CommonUtil.canConnect(ForgotPasswordActivity.this))
+                callForgotPasswordAPI(strEmail);
         }
     }
 
-    private void callForgotPasswordAPI(String email){
+    private void callForgotPasswordAPI(String email) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(getResources().getString(R.string.sending_email));
         progressDialog.setMessage(getResources().getString(R.string.text_please_wait));
@@ -104,14 +109,14 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        if(null!=compositeDisposable)
+        if (null != compositeDisposable)
             compositeDisposable.clear();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null!=compositeDisposable)
+        if (null != compositeDisposable)
             compositeDisposable.dispose();
     }
 }

@@ -27,11 +27,15 @@
     <!--login-->
     <string name="email_required">Enter Email id!!</string>
     <string name="password_required">Enter Password!!</string>
+    <string name="password_length">Password length too short!!</string>
+    <string name="invalid_email">Invalid email id!!</string>
     <string name="text_please_wait">Please wait....</string>
     <string name="text_logging_in">Logging in</string>
     <string name="login_header">LOGIN TO YOUR TELUSCARE ACCOUNT</string>
     <string name="text_forgot_password">Forgot your password?</string>
     <string name="text_dont_have_acc">Don\'t have an account? </string>
+
+    <string name="network_error">No internet!!</string>
 
     <!--Forgot password-->
     <string name="sending_email">Sending email</string>

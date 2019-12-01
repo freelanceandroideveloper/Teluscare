@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -24,6 +27,7 @@ import com.teluscare.android.R;
 import com.teluscare.android.databinding.ActivityLoginBinding;
 import com.teluscare.android.model.BaseResponseBean;
 import com.teluscare.android.model.LoginResponseBean;
+import com.teluscare.android.utility.CommonUtil;
 import com.teluscare.android.utility.TeluscareSharedPreference;
 import com.teluscare.android.viewmodel.TeluscareViewModel;
 
@@ -39,7 +43,7 @@ import static com.teluscare.android.utility.CommonUtil.USER_NAME;
  **/
 
 
-public class LoginActivity  extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private ActivityLoginBinding binding;
     private TeluscareViewModel viewModel;
@@ -47,6 +51,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     private CompositeDisposable compositeDisposable;
     private boolean fromHome;
     private ProgressDialog progressDialog;
+    private Handler mWaitHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +60,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         setListener();
     }
 
-    private void initView(){
+    private void initView() {
         Window window = this.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_blue));
@@ -67,83 +72,127 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
         compositeDisposable = new CompositeDisposable();
 
-        fromHome = getIntent().getBooleanExtra(FROM_HOME,false);
+        fromHome = getIntent().getBooleanExtra(FROM_HOME, false);
     }
 
-    private void setListener(){
+    private void setListener() {
         binding.rlLogin.setOnClickListener(this);
         binding.customToggleLogin.rlIndividual.setOnClickListener(this);
         binding.customToggleLogin.rlCompany.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
         binding.tvRegisterNow.setOnClickListener(this);
+        binding.edtPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (binding.edtPassword.getRight() - binding.edtPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        showPassword();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rlLogin:
                 processLogin();
                 break;
 
+            /*case R.id.ivShow:
+
+                break;*/
+
             case R.id.rlIndividual:
-                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
-                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
                 binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
 
             case R.id.rlCompany:
-                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_grey_bg));
-                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.rounded_blue_bg));
                 binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#D0D1D2"));
                 binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
 
             case R.id.tvForgotPassword:
-                Intent intentForgotPassword = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                Intent intentForgotPassword = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                 startActivity(intentForgotPassword);
                 break;
 
             case R.id.tvRegisterNow:
-                Intent intentRegisterNow = new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intentRegisterNow = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intentRegisterNow);
                 break;
         }
     }
 
-    private void processLogin(){
+    private void showPassword(){
+        //
+        binding.edtPassword.setTransformationMethod(null);
+        if (null != binding.edtPassword.getText())
+            binding.edtPassword.setSelection(binding.edtPassword.getText().toString().length());
+        mWaitHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
+                if (null != binding.edtPassword.getText())
+                    binding.edtPassword.setSelection(binding.edtPassword.getText().toString().length());
+            }
+        },1000);
+    }
+
+    private void processLogin() {
         String strEmail = binding.edtUsername.getText().toString();
         String strPassword = binding.edtPassword.getText().toString();
 
-        if(TextUtils.isEmpty(strEmail)){
+        if (TextUtils.isEmpty(strEmail)) {
             binding.edtUsername.setError(getResources().getString(R.string.email_required));
             binding.edtUsername.requestFocus();
-        }else if(TextUtils.isEmpty(strPassword)){
+        } else if (CommonUtil.isValidEmail(strEmail)) {
+            binding.edtUsername.setError(getResources().getString(R.string.invalid_email));
+            binding.edtUsername.requestFocus();
+        } else if (TextUtils.isEmpty(strPassword)) {
             binding.edtPassword.setError(getResources().getString(R.string.password_required));
             binding.edtPassword.requestFocus();
-        }else{
-            callLoginAPI(strEmail,strPassword);
+        } else if (strPassword.length() < 6) {
+            binding.edtPassword.setError(getResources().getString(R.string.password_length));
+            binding.edtPassword.requestFocus();
+        } else {
+            if (CommonUtil.canConnect(LoginActivity.this))
+                callLoginAPI(strEmail, strPassword);
         }
     }
 
-    private void callLoginAPI(String email,String password){
+    private void callLoginAPI(String email, String password) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle(getResources().getString(R.string.text_logging_in));
         progressDialog.setMessage(getResources().getString(R.string.text_please_wait));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        compositeDisposable.add(viewModel.login(email, password, "1",new Consumer<LoginResponseBean>() {
+        compositeDisposable.add(viewModel.login(email, password, "1", new Consumer<LoginResponseBean>() {
             @Override
             public void accept(LoginResponseBean responseBean) throws Exception {
-                    progressDialog.dismiss();
-                    finishAffinity();
-                    TeluscareSharedPreference.setStringValue(sharedPreferences,USER_NAME,responseBean.getData().getFirst_name());
-                    TeluscareSharedPreference.setBooleanValue(sharedPreferences,IS_LOGGED_IN,true);
-                    Intent intentDashboard = new Intent(LoginActivity.this,DashboardActivity.class);
-                    intentDashboard.putExtra(FROM_HOME,fromHome);
-                    startActivity(intentDashboard);
+                progressDialog.dismiss();
+                finishAffinity();
+                TeluscareSharedPreference.setStringValue(sharedPreferences, USER_NAME, responseBean.getData().getFirst_name());
+                TeluscareSharedPreference.setBooleanValue(sharedPreferences, IS_LOGGED_IN, true);
+                Intent intentDashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                intentDashboard.putExtra(FROM_HOME, fromHome);
+                startActivity(intentDashboard);
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -157,14 +206,14 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     @Override
     protected void onStop() {
         super.onStop();
-        if(null!=compositeDisposable)
+        if (null != compositeDisposable)
             compositeDisposable.clear();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null!=compositeDisposable)
+        if (null != compositeDisposable)
             compositeDisposable.dispose();
     }
 
