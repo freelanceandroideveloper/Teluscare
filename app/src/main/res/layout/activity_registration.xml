@@ -80,53 +80,34 @@
                         android:focusable="true"
                         android:focusableInTouchMode="true">
 
-                        <LinearLayout
-                            android:id="@+id/llMainBg"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginLeft="@dimen/_40sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_40sdp"
-                            android:background="@drawable/rounded_grey_bg"
-                            android:weightSum="2">
+                        <include
+                            android:id="@+id/customToggleLogin"
+                            layout="@layout/custom_toggle" />
 
-                            <RelativeLayout
-                                android:id="@+id/rlIndividual"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_blue_bg">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:text="Individual"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/rlCompany"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:text="Company"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
-                        </LinearLayout>
                     </RelativeLayout>
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!--<gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+                    android:id="@+id/SearchableSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:gravity="center_horizontal"
+                    app:StartSearchTintColor="@android:color/white"
+                    app:DoneSearchTintColor="@android:color/holo_purple"
+                    app:RevealViewBackgroundColor="@android:color/holo_purple"
+                    app:SearchViewBackgroundColor="@android:color/secondary_text_dark"
+                    app:ShowBorders="true"
+                    app:RevealEmptyText="Touch to select"
+                    app:SpinnerExpandHeight="300dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/switchtoggle"/>-->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtinput_jobrole"
@@ -194,6 +175,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     app:errorEnabled="false"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtinput_lastnamew">
@@ -204,8 +187,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_light"
                         android:hint="@string/enter_password"
-                        android:inputType="numberPassword"
-                        android:maxLength="8" />
+                        android:inputType="textPassword"
+                        android:maxLength="15" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -225,8 +208,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_light"
                         android:hint="@string/enter_cnf_password"
-                        android:inputType="numberPassword"
-                        android:maxLength="8" />
+                        android:inputType="textPassword"
+                        android:maxLength="15" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -276,7 +259,8 @@
                     android:text="@string/txt_register"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@+id/checkbox"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />

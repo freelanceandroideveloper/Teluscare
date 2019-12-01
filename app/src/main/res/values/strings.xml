@@ -35,7 +35,7 @@
     <string name="text_forgot_password">Forgot your password?</string>
     <string name="text_dont_have_acc">Don\'t have an account? </string>
 
-    <string name="network_error">No internet!!</string>
+    <string name="network_error">Please check your internet connection!!</string>
 
     <!--Forgot password-->
     <string name="sending_email">Sending email</string>

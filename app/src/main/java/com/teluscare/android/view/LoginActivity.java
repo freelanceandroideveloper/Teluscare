@@ -8,7 +8,10 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,22 +84,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         binding.customToggleLogin.rlCompany.setOnClickListener(this);
         binding.tvForgotPassword.setOnClickListener(this);
         binding.tvRegisterNow.setOnClickListener(this);
-        binding.edtPassword.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
 
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (binding.edtPassword.getRight() - binding.edtPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
-                        showPassword();
-                        return true;
-                    }
+        binding.edtUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String result = s.toString().replaceAll(" ", "").trim();
+                if (!s.toString().equals(result)) {
+                    binding.edtUsername.setText(result);
+                    binding.edtUsername.setSelection(result.length());
                 }
-                return false;
             }
         });
     }
@@ -140,7 +146,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private void showPassword(){
+    private void showPassword() {
         //
         binding.edtPassword.setTransformationMethod(null);
         if (null != binding.edtPassword.getText())
@@ -152,7 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (null != binding.edtPassword.getText())
                     binding.edtPassword.setSelection(binding.edtPassword.getText().toString().length());
             }
-        },1000);
+        }, 1000);
     }
 
     private void processLogin() {
@@ -162,14 +168,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (TextUtils.isEmpty(strEmail)) {
             binding.edtUsername.setError(getResources().getString(R.string.email_required));
             binding.edtUsername.requestFocus();
-        } else if (CommonUtil.isValidEmail(strEmail)) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             binding.edtUsername.setError(getResources().getString(R.string.invalid_email));
             binding.edtUsername.requestFocus();
-        } else if (TextUtils.isEmpty(strPassword)) {
-            binding.edtPassword.setError(getResources().getString(R.string.password_required));
-            binding.edtPassword.requestFocus();
-        } else if (strPassword.length() < 6) {
-            binding.edtPassword.setError(getResources().getString(R.string.password_length));
+        } else if (!CommonUtil.isValidEmail(strEmail)) {
+            binding.edtUsername.setError(getResources().getString(R.string.invalid_email));
+            binding.edtUsername.requestFocus();
+        }else if (TextUtils.isEmpty(strPassword)) {
+            Toast.makeText(this, getResources().getString(R.string.password_required), Toast.LENGTH_SHORT).show();
+        } else if (strPassword.length() < 4) {
+            Toast.makeText(this, getResources().getString(R.string.password_length), Toast.LENGTH_SHORT).show();
             binding.edtPassword.requestFocus();
         } else {
             if (CommonUtil.canConnect(LoginActivity.this))

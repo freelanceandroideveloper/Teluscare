@@ -1,16 +1,14 @@
 package com.teluscare.android.view;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.view.MotionEvent;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -20,9 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import com.teluscare.android.R;
 import com.teluscare.android.databinding.ActivityForgotPasswordBinding;
 import com.teluscare.android.model.ForgotPasswordResponseBean;
-import com.teluscare.android.model.LoginResponseBean;
 import com.teluscare.android.utility.CommonUtil;
-import com.teluscare.android.utility.TeluscareSharedPreference;
 import com.teluscare.android.viewmodel.TeluscareViewModel;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -59,6 +55,27 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
 
     private void setListener() {
         binding.rlSubmit.setOnClickListener(this);
+
+        binding.edtForgotPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String result = s.toString().replaceAll(" ", "").trim();
+                if (!s.toString().equals(result)) {
+                    binding.edtForgotPassword.setText(result);
+                    binding.edtForgotPassword.setSelection(result.length());
+                }
+            }
+        });
     }
 
     @Override
@@ -75,7 +92,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         if (TextUtils.isEmpty(strEmail)) {
             binding.edtForgotPassword.setError(getResources().getString(R.string.email_required));
             binding.edtForgotPassword.requestFocus();
-        } else if (CommonUtil.isValidEmail(strEmail)) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
             binding.edtForgotPassword.setError(getResources().getString(R.string.invalid_email));
             binding.edtForgotPassword.requestFocus();
         } else {

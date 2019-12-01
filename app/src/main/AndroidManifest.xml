@@ -14,12 +14,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".view.SignupActivity"/>
         <activity
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:name=".view.RegistrationActivity" />
         <activity android:name=".MainActivity">
