@@ -126,7 +126,7 @@
                 android:layout_marginStart="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginEnd="@dimen/_50sdp"
-                android:background="@drawable/rounded_button_brickred"
+                android:background="@drawable/rounded_orange_bg"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/text_send_otp"
                 android:textColor="@android:color/white"

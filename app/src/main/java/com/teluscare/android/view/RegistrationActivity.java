@@ -6,9 +6,12 @@ import androidx.databinding.DataBindingUtil;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -54,9 +57,10 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
     }
 
     private void setListener() {
+        String selection;
         binding.register.setOnClickListener(this);
-        binding.rlIndividual.setOnClickListener(this);
-        binding.rlCompany.setOnClickListener(this);
+        binding.customToggleLogin.rlIndividual.setOnClickListener(this);
+        binding.customToggleLogin.rlCompany.setOnClickListener(this);
         binding.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 String selection = (String)parent.getItemAtPosition(position);
@@ -83,6 +87,7 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
         });
 
 
+
     }
 
     private void initView() {
@@ -97,16 +102,23 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
         sharedPreferences = teluscareSharedPreference.getTeluscareSharedPreference();
         compositeDisposable = new CompositeDisposable();
         setNewToolbarTitle("");
-        progressBar = new ProgressDialog(this);
-        progressBar.setMessage("Its loading....");
-        progressBar.setTitle("Teluscare");
-        progressBar.setCancelable(false);
-        progressBar.show();
-        Intent i = getIntent();
-        binding.edtEmail.setText(i.getStringExtra("email"));
-        binding.edtEmail.setEnabled(false);
-        getcompanydata();
-        getindividualdata();
+        if(isConnected(this)){
+            progressBar = new ProgressDialog(this);
+            progressBar.setMessage("Its loading....");
+            progressBar.setTitle("Teluscare");
+            progressBar.setCancelable(false);
+            progressBar.show();
+            Intent i = getIntent();
+            binding.edtEmail.setText(i.getStringExtra("email"));
+            binding.edtEmail.setEnabled(false);
+            getcompanydata();
+            getindividualdata();
+        }else{
+            Toast.makeText(this,"Check your internet connection",Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+
 
     }
 
@@ -152,17 +164,19 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.rlIndividual:
-                binding.rlIndividual.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_blue_bg));
-                binding.llMainBg.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlCompany.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_grey_bg));
-                setadapterdataindividual();
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#D0D1D2"));
+                binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
 
             case R.id.rlCompany:
-                binding.llMainBg.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlIndividual.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_grey_bg));
-                binding.rlCompany.setBackground(ContextCompat.getDrawable(RegistrationActivity.this,R.drawable.rounded_blue_bg));
-                setadapterdatacompany();
+                binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_grey_bg));
+                binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(this,R.drawable.rounded_blue_bg));
+                binding.customToggleLogin.tvIndividual.setTextColor(Color.parseColor("#D0D1D2"));
+                binding.customToggleLogin.tvCompany.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
         }
     }
@@ -221,7 +235,13 @@ public class RegistrationActivity  extends BaseActivity implements View.OnClickL
     }else  if(!binding.checkbox.isChecked()){
           Toast.makeText(this, "Please select terms and conditions", Toast.LENGTH_SHORT).show();
       }else{
-        callregisterapi();
+          if (isConnected(this)){
+              callregisterapi();
+          }else{
+              Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+
+          }
+
     }
 
 
