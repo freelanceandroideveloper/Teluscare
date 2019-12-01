@@ -86,7 +86,7 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
 
     private void processSignup() {
         String strEmail = binding.edtEmaiid.getText().toString();
-        if(TextUtils.isEmpty(strEmail) && Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()){
+        if(TextUtils.isEmpty(strEmail) && !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()){
             Toast.makeText(this, "Email is Invalid!!", Toast.LENGTH_SHORT).show();
         }else{
             if(isConnected(this)){

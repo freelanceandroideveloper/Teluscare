@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -108,7 +109,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         String strEmail = binding.edtUsername.getText().toString();
         String strPassword = binding.edtPassword.getText().toString();
 
-        if(TextUtils.isEmpty(strEmail)){
+        if(TextUtils.isEmpty(strEmail)&& !Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()){
             Toast.makeText(this, "Email is required!!", Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(strPassword)){
             Toast.makeText(this, "Password is required!!", Toast.LENGTH_SHORT).show();
