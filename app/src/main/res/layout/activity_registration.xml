@@ -62,31 +62,50 @@
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+
+                <RelativeLayout
                     android:id="@+id/switchtoggle"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_10sdp"
-                    app:errorEnabled="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtinput_emailid">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true">
+                    <include
+                        android:id="@+id/customToggleLogin"
+                        layout="@layout/custom_toggle" />
+                </RelativeLayout>
+                <!--
 
-                        <include
-                            android:id="@+id/customToggleLogin"
-                            layout="@layout/custom_toggle" />
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/switchtoggle"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_10sdp"
+                                    app:errorEnabled="false"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/txtinput_emailid">
 
-                    </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:clickable="true"
+                                        android:focusable="true"
+                                        android:focusableInTouchMode="true">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                                        <include
+                                            android:id="@+id/customToggleLogin"
+                                            layout="@layout/custom_toggle" />
+
+                                    </RelativeLayout>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                -->
 
                 <!--<gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
                     android:id="@+id/SearchableSpinner"
@@ -120,13 +139,46 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/switchtoggle">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/autoCompleteTextView"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_job"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </AutoCompleteTextView>
+                        android:layout_height="@dimen/_35sdp"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/poppins_light"
+                        android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materialcard"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginEnd="@dimen/_50sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtinput_jobrole">
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        android:id="@+id/mListView"
+                        android:layout_below="@+id/mSearchView"/>
+
+                        <SearchView
+                            android:id="@+id/mSearchView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:queryHint="Search Here"
+                            android:iconifiedByDefault="false"
+                            android:background="@drawable/searchviewbackgroud"
+                            android:layout_alignParentTop="true"
+                            />
+
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtinput_fullname"
@@ -137,7 +189,7 @@
                     app:errorEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtinput_jobrole">
+                    app:layout_constraintTop_toBottomOf="@id/materialcard">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edt_fullname"
@@ -175,11 +227,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
                     app:errorEnabled="false"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtinput_lastnamew">
+                    app:layout_constraintTop_toBottomOf="@id/txtinput_lastnamew"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edt_password"
@@ -237,8 +289,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:text="@string/text_read_terms"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -250,8 +302,8 @@
                     style="@style/blue_button_poppins_semibold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/mob_btn_bg"
@@ -261,9 +313,9 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toBottomOf="@+id/checkbox"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/checkbox" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

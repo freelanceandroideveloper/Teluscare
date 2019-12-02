@@ -81,6 +81,8 @@ dependencies {
     implementation "com.android.support:support-annotations:1.1.0"
 
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
+
+
     //implementation 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
 }
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

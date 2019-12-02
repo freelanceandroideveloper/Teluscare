@@ -3,6 +3,7 @@ package com.teluscare.android.view;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,12 +13,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -37,7 +37,7 @@ import java.util.List;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
-public class RegistrationActivity extends BaseActivity implements View.OnClickListener {
+public class RegistrationActivity extends BaseActivity implements View.OnClickListener, SearchView.OnQueryTextListener {
     private ActivityRegistrationBinding binding;
     private TeluscareViewModel viewModel;
     private SharedPreferences sharedPreferences;
@@ -62,7 +62,41 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         binding.register.setOnClickListener(this);
         binding.customToggleLogin.rlIndividual.setOnClickListener(this);
         binding.customToggleLogin.rlCompany.setOnClickListener(this);
-        binding.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (individual) {
+                    keyid = individuallist.get(position).getUsername();
+                    binding.textJob.setText( individuallist.get(position).getUser_id());
+                    binding.materialcard.setVisibility(View.GONE);
+                }else{
+                    keyid = companylist.get(position).getUsername();
+                    binding.textJob.setText( companylist.get(position).getUser_id());
+                    binding.materialcard.setVisibility(View.GONE);
+
+                }
+                Toast.makeText(RegistrationActivity.this,
+                        keyid, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.textJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.materialcard.getVisibility()== View.VISIBLE){
+                    binding.materialcard.setVisibility(View.GONE);
+                   // binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
+
+                }else {
+                    binding.materialcard.setVisibility(View.VISIBLE);
+                   // binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_arrow_drop_up_black_24dp),null);
+
+
+                }
+            }
+        });
+
+       /* binding.autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (individual) {
@@ -81,7 +115,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         });
-
+*/
         binding.edtCnfpasswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,6 +191,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void accept(CompanyListResponseBean responseBean) throws Exception {
                 companylist = responseBean.getData();
+                setadapterdatacompany();
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -175,6 +210,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.rlIndividual:
+                setadapterdataindividual();
                 binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_blue_bg));
                 binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
@@ -183,6 +219,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.rlCompany:
+                setadapterdatacompany();
                 binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_blue_bg));
@@ -194,39 +231,30 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
     private void setadapterdataindividual() {
         individual = true;
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < individuallist.size(); i++) {
-            list.add(individuallist.get(i).getUsername());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.select_dialog_item, list);
-        //Getting the instance of AutoCompleteTextView
-        binding.autoCompleteTextView.setThreshold(1);//will start working from first character
-        binding.autoCompleteTextView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
-        binding.autoCompleteTextView.setHint(getResources().getString(R.string.text_select_job));
+        SearchIndividualAdapter employeeAdapter = new SearchIndividualAdapter(this, individuallist);
+        binding.mListView.setAdapter(employeeAdapter);
+
+        binding.mListView.setTextFilterEnabled(true);
+        setupSearchView();
+        binding.textJob.setHint(getResources().getString(R.string.text_select_job));
         progressBar.dismiss();
     }
 
     private void setadapterdatacompany() {
         company = true;
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < companylist.size(); i++) {
-            list.add(companylist.get(i).getUsername());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (this, android.R.layout.select_dialog_item, list);
-        //Getting the instance of AutoCompleteTextView
-        binding.autoCompleteTextView.setThreshold(1);//will start working from first character
-        binding.autoCompleteTextView.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
-        binding.autoCompleteTextView.setHint(getResources().getString(R.string.text_select_company));
+        SearchCompanyAdapter employeeAdapter = new SearchCompanyAdapter(this, companylist);
+        binding.mListView.setAdapter(employeeAdapter);
+        binding.mListView.setTextFilterEnabled(true);
+        setupSearchView();
+        binding.textJob.setHint(getResources().getString(R.string.text_select_company));
         progressBar.dismiss();
     }
 
 
     private void processRegistration() {
         if (TextUtils.isEmpty(keyid)) {
-            binding.autoCompleteTextView.setError("Please select value");
-            binding.autoCompleteTextView.requestFocus();
+            /*binding.autoCompleteTextView.setError("Please select value");
+            binding.autoCompleteTextView.requestFocus();*/
         } else if (TextUtils.isEmpty(binding.edtFullname.getText())) {
             binding.edtFullname.setError("Please Enter first Name");
             binding.edtFullname.requestFocus();
@@ -260,7 +288,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     private void callregisterapi() {
         progressBar.show();
         String email = binding.edtEmail.getText().toString();
-        String job = binding.autoCompleteTextView.getText().toString();
+       // String job = binding.autoCompleteTextView.getText().toString();
         String firstname = binding.edtFullname.getText().toString();
         String lastname = binding.edtLastname.getText().toString();
         String password = binding.edtPassword.getText().toString();
@@ -311,5 +339,35 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         if (null != compositeDisposable)
             compositeDisposable.dispose();
     }
+
+
+    private void setupSearchView()
+    {
+        binding.mSearchView.setIconifiedByDefault(false);
+        binding.mSearchView.setOnQueryTextListener(this);
+        binding.mSearchView.setSubmitButtonEnabled(true);
+        binding.mSearchView.setQueryHint("Search Here");
+        binding.mSearchView.setLayoutParams(new ActionBar.LayoutParams(Gravity.RIGHT));
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+
+        if (TextUtils.isEmpty(newText)) {
+            binding.mListView.clearTextFilter();
+        } else {
+            binding.mListView.setFilterText(newText);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query)
+    {
+        return false;
+    }
+
+
 
 }
