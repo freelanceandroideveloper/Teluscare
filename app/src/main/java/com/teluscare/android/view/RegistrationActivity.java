@@ -65,19 +65,38 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         binding.mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (individual) {
-                    keyid = individuallist.get(position).getUsername();
-                    binding.textJob.setText( individuallist.get(position).getUser_id());
-                    binding.materialcard.setVisibility(View.GONE);
-                }else{
-                    keyid = companylist.get(position).getUsername();
-                    binding.textJob.setText( companylist.get(position).getUser_id());
-                    binding.materialcard.setVisibility(View.GONE);
+                        if (individual) {
+                        List<IndividualListResponseDataBean> selection = (List<IndividualListResponseDataBean>) parent.getItemAtPosition(position);
+                        keyid = selection.get(position).getJobid();
+                        binding.textJob.setText(selection.get(position).getUsername());
+                        binding.materialcard.setVisibility(View.GONE);
+                        /*for (int i = 0; i < individuallist.size(); i++) {
+                            if (individuallist.get(i).getUsername().equalsIgnoreCase(selection)) {
+                                keyid = individuallist.get(i).getJobid();
+                                binding.textJob.setText(individuallist.get(i).getUsername());
+                                binding.materialcard.setVisibility(View.GONE);
+
+                            }
+                        }*/
+                    } else {
+                        List<CompanyListResponseDataBean> selection = (List<CompanyListResponseDataBean>) parent.getItemAtPosition(position);
+                        keyid = selection.get(position).getJobid();
+                        binding.textJob.setText(selection.get(position).getUsername());
+                        binding.materialcard.setVisibility(View.GONE);
+                        /*for (int i = 0; i < companylist.size(); i++) {
+                            if (companylist.get(i).getUsername().equalsIgnoreCase(selection)) {
+                                keyid = companylist.get(i).getJobid();
+                                binding.textJob.setText(companylist.get(i).getUsername());
+                                binding.materialcard.setVisibility(View.GONE);
+
+
+                            }
+                        }*/
+
+                    }
 
                 }
-                Toast.makeText(RegistrationActivity.this,
-                        keyid, Toast.LENGTH_SHORT).show();
-            }
+
         });
 
         binding.textJob.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +104,11 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             public void onClick(View v) {
                 if(binding.materialcard.getVisibility()== View.VISIBLE){
                     binding.materialcard.setVisibility(View.GONE);
-                   // binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
+                    binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
 
                 }else {
                     binding.materialcard.setVisibility(View.VISIBLE);
-                   // binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_arrow_drop_up_black_24dp),null);
+                    binding.textJob.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null, getResources().getDrawable(R.drawable.ic_arrow_drop_up_black_24dp),null);
 
 
                 }
@@ -253,8 +272,8 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
     private void processRegistration() {
         if (TextUtils.isEmpty(keyid)) {
-            /*binding.autoCompleteTextView.setError("Please select value");
-            binding.autoCompleteTextView.requestFocus();*/
+            binding.textJob.setError("Please select value");
+            binding.textJob.requestFocus();
         } else if (TextUtils.isEmpty(binding.edtFullname.getText())) {
             binding.edtFullname.setError("Please Enter first Name");
             binding.edtFullname.requestFocus();
@@ -347,7 +366,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         binding.mSearchView.setOnQueryTextListener(this);
         binding.mSearchView.setSubmitButtonEnabled(true);
         binding.mSearchView.setQueryHint("Search Here");
-        binding.mSearchView.setLayoutParams(new ActionBar.LayoutParams(Gravity.RIGHT));
+       // binding.mSearchView.setLayoutParams(new ActionBar.LayoutParams(Gravity.RIGHT));
     }
 
     @Override

@@ -139,14 +139,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/switchtoggle">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/text_job"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:textAlignment="center"
                         android:gravity="center"
-                        android:fontFamily="@font/poppins_light"
-                        android:inputType="textEmailAddress" />
+                        android:fontFamily="@font/poppins_light"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.card.MaterialCardView
