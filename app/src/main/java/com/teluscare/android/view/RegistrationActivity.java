@@ -1,5 +1,6 @@
 package com.teluscare.android.view;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     private boolean company;
     private boolean individual;
     ProgressDialog progressBar;
+    Filter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +163,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
 
         Window window = this.getWindow();
@@ -253,8 +257,8 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         individual = true;
         SearchIndividualAdapter employeeAdapter = new SearchIndividualAdapter(this, individuallist);
         binding.mListView.setAdapter(employeeAdapter);
-
         binding.mListView.setTextFilterEnabled(true);
+        filter= employeeAdapter.getFilter();
         setupSearchView();
         binding.textJob.setHint(getResources().getString(R.string.text_select_job));
         progressBar.dismiss();
@@ -265,6 +269,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         SearchCompanyAdapter employeeAdapter = new SearchCompanyAdapter(this, companylist);
         binding.mListView.setAdapter(employeeAdapter);
         binding.mListView.setTextFilterEnabled(true);
+        filter=employeeAdapter.getFilter();
         setupSearchView();
         binding.textJob.setHint(getResources().getString(R.string.text_select_company));
         progressBar.dismiss();
@@ -375,9 +380,13 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     {
 
         if (TextUtils.isEmpty(newText)) {
-            binding.mListView.clearTextFilter();
+            filter.filter(null);
+
+            //  binding.mListView.clearTextFilter();
         } else {
-            binding.mListView.setFilterText(newText);
+            filter.filter(newText);
+
+            // binding.mListView.setFilterText(newText);
         }
         return true;
     }
