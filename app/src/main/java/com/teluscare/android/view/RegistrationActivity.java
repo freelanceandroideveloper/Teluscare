@@ -183,6 +183,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             binding.edtEmail.setEnabled(false);
             getcompanydata();
             getindividualdata();
+            binding.mListView.setNestedScrollingEnabled(true);
         } else {
             Toast.makeText(this, "Check your internet connection", Toast.LENGTH_LONG).show();
             finish();
