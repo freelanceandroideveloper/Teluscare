@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity {
                         intentDash.putExtra(FROM_HOME, false);
                         startActivity(intentDash);
                     } else {
-                        Intent intentDash = new Intent(SplashActivity.this, RegistrationActivity.class);
+                        Intent intentDash = new Intent(SplashActivity.this, HomeActivity.class);
                         startActivity(intentDash);
                     }
                     finish();

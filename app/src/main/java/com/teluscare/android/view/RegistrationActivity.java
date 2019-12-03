@@ -163,7 +163,6 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
 
         Window window = this.getWindow();
@@ -255,6 +254,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
     private void setadapterdataindividual() {
         individual = true;
+        company= false;
         SearchIndividualAdapter employeeAdapter = new SearchIndividualAdapter(this, individuallist);
         binding.mListView.setAdapter(employeeAdapter);
         binding.mListView.setTextFilterEnabled(true);
@@ -266,6 +266,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
     private void setadapterdatacompany() {
         company = true;
+        individual=false;
         SearchCompanyAdapter employeeAdapter = new SearchCompanyAdapter(this, companylist);
         binding.mListView.setAdapter(employeeAdapter);
         binding.mListView.setTextFilterEnabled(true);
