@@ -167,7 +167,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <SearchView
+                        <androidx.appcompat.widget.SearchView
                             android:id="@+id/mSearchView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -176,6 +176,8 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginStart="@dimen/_8sdp"
                             android:layout_marginEnd="@dimen/_8sdp"
+                            app:closeIcon="@null"
+                            app:goIcon="@null"
                             android:background="@drawable/searchviewbackgroud"
                             android:layout_alignParentTop="true"
                             />

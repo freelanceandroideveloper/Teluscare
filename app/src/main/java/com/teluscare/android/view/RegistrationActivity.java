@@ -21,6 +21,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ import java.util.List;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
-public class RegistrationActivity extends BaseActivity implements View.OnClickListener, SearchView.OnQueryTextListener {
+public class RegistrationActivity extends BaseActivity implements View.OnClickListener,androidx.appcompat.widget.SearchView.OnQueryTextListener {
     private ActivityRegistrationBinding binding;
     private TeluscareViewModel viewModel;
     private SharedPreferences sharedPreferences;
@@ -375,11 +376,13 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         binding.mSearchView.setOnQueryTextListener(this);
         binding.mSearchView.setSubmitButtonEnabled(true);
         binding.mSearchView.setQueryHint("Search Here");
+
        // binding.mSearchView.setLayoutParams(new ActionBar.LayoutParams(Gravity.RIGHT));
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
         if (newText.equalsIgnoreCase("")) {
             return true;
         }
