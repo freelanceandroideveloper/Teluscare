@@ -145,6 +145,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:focusable="false"
                         android:clickable="true"
                         android:fontFamily="@font/poppins_light"/>

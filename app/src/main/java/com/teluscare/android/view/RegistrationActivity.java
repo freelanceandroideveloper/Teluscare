@@ -66,9 +66,9 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         if (individual) {
-                        List<IndividualListResponseDataBean> selection = (List<IndividualListResponseDataBean>) parent.getItemAtPosition(position);
-                        keyid = selection.get(position).getJobid();
-                        binding.textJob.setText(selection.get(position).getUsername());
+                        IndividualListResponseDataBean selection = (IndividualListResponseDataBean) parent.getItemAtPosition(position);
+                        keyid = selection.getJobid();
+                        binding.textJob.setText(selection.getUsername());
                         binding.materialcard.setVisibility(View.GONE);
                         /*for (int i = 0; i < individuallist.size(); i++) {
                             if (individuallist.get(i).getUsername().equalsIgnoreCase(selection)) {
@@ -79,9 +79,9 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                             }
                         }*/
                     } else {
-                        List<CompanyListResponseDataBean> selection = (List<CompanyListResponseDataBean>) parent.getItemAtPosition(position);
-                        keyid = selection.get(position).getJobid();
-                        binding.textJob.setText(selection.get(position).getUsername());
+                        CompanyListResponseDataBean selection = (CompanyListResponseDataBean) parent.getItemAtPosition(position);
+                        keyid = selection.getJobid();
+                        binding.textJob.setText(selection.getUsername());
                         binding.materialcard.setVisibility(View.GONE);
                         /*for (int i = 0; i < companylist.size(); i++) {
                             if (companylist.get(i).getUsername().equalsIgnoreCase(selection)) {
