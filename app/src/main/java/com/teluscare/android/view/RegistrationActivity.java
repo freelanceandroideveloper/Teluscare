@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -163,6 +164,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
+    @SuppressLint("NewApi")
     private void initView() {
 
         Window window = this.getWindow();
@@ -377,19 +379,22 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public boolean onQueryTextChange(String newText)
-    {
-
-        if (TextUtils.isEmpty(newText)) {
-            filter.filter(null);
-
-            //  binding.mListView.clearTextFilter();
-        } else {
-            filter.filter(newText);
-
-            // binding.mListView.setFilterText(newText);
+    public boolean onQueryTextChange(String newText) {
+        if (newText.equalsIgnoreCase("")) {
+            return true;
         }
-        return true;
+            if (TextUtils.isEmpty(newText)) {
+                filter.filter(null);
+
+                //  binding.mListView.clearTextFilter();
+            } else {
+                filter.filter(newText);
+
+                // binding.mListView.setFilterText(newText);
+            }
+            return true;
+
+
     }
 
     @Override
