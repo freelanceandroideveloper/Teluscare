@@ -217,7 +217,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void accept(CompanyListResponseBean responseBean) throws Exception {
                 companylist = responseBean.getData();
-                setadapterdatacompany();
+                setadapterdatacompany("");
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -245,7 +245,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                 break;
 
             case R.id.rlCompany:
-                setadapterdatacompany();
+                setadapterdatacompany(getResources().getString(R.string.text_select_company));
                 binding.customToggleLogin.llMainBg.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.rlIndividual.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_grey_bg));
                 binding.customToggleLogin.rlCompany.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_blue_bg));
@@ -264,10 +264,11 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         filter= employeeAdapter.getFilter();
         setupSearchView();
         binding.textJob.setHint(getResources().getString(R.string.text_select_job));
+        binding.textJob.setText("");
         progressBar.dismiss();
     }
 
-    private void setadapterdatacompany() {
+    private void setadapterdatacompany(String strHint) {
         company = true;
         individual=false;
         SearchCompanyAdapter employeeAdapter = new SearchCompanyAdapter(this, companylist);
@@ -275,7 +276,8 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         binding.mListView.setTextFilterEnabled(true);
         filter=employeeAdapter.getFilter();
         setupSearchView();
-        binding.textJob.setHint(getResources().getString(R.string.text_select_company));
+        binding.textJob.setHint(strHint);
+        binding.textJob.setText("");
         progressBar.dismiss();
     }
 

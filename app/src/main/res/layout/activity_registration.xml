@@ -148,6 +148,8 @@
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:focusable="false"
                         android:clickable="true"
+                        android:cursorVisible="false"
+                        android:singleLine="true"
                         android:fontFamily="@font/poppins_light"/>
                 </com.google.android.material.textfield.TextInputLayout>
 

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="tttttttt"
         android:layout_margin="@dimen/_5sdp"
-        android:textSize="@dimen/_16sdp"/>
+        android:textSize="@dimen/_15sdp"/>
 
 
     <TextView
