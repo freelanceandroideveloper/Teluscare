@@ -39,4 +39,63 @@
 
     <!--Forgot password-->
     <string name="sending_email">Sending email</string>
+
+    <string-array name="emirates">
+        <item>Select Emirates</item>
+        <item>Dubai</item>
+        <item>Abu Dhabi</item>
+        <item>Al Ain</item>
+        <item>Sharjah</item>
+        <item>Fujairah</item>
+        <item>Ras Al Khaimah</item>
+        <item>Ajman</item>
+        <item>Umm Al Quwain</item>
+    </string-array>
+
+    <string-array name="cleaning_type">
+        <item>Select Type of Cleaning</item>
+        <item>General Cleaning</item>
+        <item>House Keeping</item>
+        <item>Baby Sitting</item>
+        <item>Deep Cleaning</item>
+        <item>Move IN/OUT</item>
+        <item>Post Construction</item>
+        <item>Pre Construction</item>
+        <item>Sofa Cleaning</item>
+        <item>Carpet Cleaning</item>
+        <item>Curtain Cleaning</item>
+        <item>Water Tank</item>
+    </string-array>
+
+    <string-array name="weekly">
+        <item>Once a week</item>
+        <item>Twice a week</item>
+        <item>Thrice a week</item>
+        <item>Four times a week</item>
+        <item>Five times a week</item>
+        <item>Six times a week</item>
+        <item>Seven times a week</item>
+        <item>Once in weekend</item>
+    </string-array>
+
+    <string-array name="annual">
+        <item>1 Month</item>
+        <item>2 Month</item>
+        <item>3 Month</item>
+        <item>4 Month</item>
+        <item>5 Month</item>
+        <item>6 Month</item>
+        <item>7 Month</item>
+        <item>8 Month</item>
+        <item>9 Month</item>
+        <item>10 Month</item>
+        <item>11 Month</item>
+        <item>12 Month</item>
+    </string-array>
+
+    <string-array name="week">
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
+    </string-array>
 </resources>

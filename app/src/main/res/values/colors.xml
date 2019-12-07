@@ -10,6 +10,8 @@
     <color name="orange_text">#F15A2E</color>
     <color name="status_bar_blue">#02AEFF</color>
     <color name="status_bar_orange">#F15A2E</color>
+    <color name="color_white">#FFFFFF</color>
 
     <color name="home_actionbar">#494949</color>
+    <color name="colorGrey">#f0f0f0</color>
 </resources>

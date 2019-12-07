@@ -70,6 +70,12 @@
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
+        <!--<activity
+            android:name=".view.CleaningCalculatorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>-->
+
         <activity
             android:name=".view.HomeActivity"
             android:screenOrientation="portrait"

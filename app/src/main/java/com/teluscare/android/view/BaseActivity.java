@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -71,12 +72,19 @@ public class BaseActivity extends AppCompatActivity {
             super.setTitle(title);
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(mToolbar);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
             if (mToolbar != null) {
                 mToolbar.setTitle(title);
+                mToolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
                 mToolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left_black_24dp);
             }
             mActionBar = getSupportActionBar();
-            mActionBar.setDisplayHomeAsUpEnabled(true);
+            //mActionBar.setDisplayHomeAsUpEnabled(true);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -177,7 +177,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
         TeluscareSharedPreference teluscareSharedPreference = new TeluscareSharedPreference();
         sharedPreferences = teluscareSharedPreference.getTeluscareSharedPreference();
         compositeDisposable = new CompositeDisposable();
-        setNewToolbarTitle("");
+        //setNewToolbarTitle("");
         if (isConnected(this)) {
             progressBar = new ProgressDialog(this);
             progressBar.setMessage("Please wait...");
